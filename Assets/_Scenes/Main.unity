@@ -230,7 +230,8 @@ Prefab:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114976213677438338, guid: dce70d5c54231bc4a9edbd81ca1ded57, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: dce70d5c54231bc4a9edbd81ca1ded57, type: 2}
   m_IsPrefabParent: 0
 --- !u!1001 &1012500899
@@ -456,8 +457,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1896314334}
+  - component: {fileID: 1896314335}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: ProgramManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -476,6 +478,22 @@ Transform:
   m_Father: {fileID: 281217865}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1896314335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1896314333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7e6791f4e6a6c54191fdf63ee976067, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scanTime: 30
+  defaultMaterial: {fileID: 0}
+  secondaryMaterial: {fileID: 0}
+  minimumVerticalPlanes: 1
+  minimumHorizontalPlanes: 1
 --- !u!1001 &2077871708
 Prefab:
   m_ObjectHideFlags: 0
