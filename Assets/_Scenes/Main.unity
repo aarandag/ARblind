@@ -490,8 +490,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scanTime: 30
-  defaultMaterial: {fileID: 0}
-  secondaryMaterial: {fileID: 0}
+  defaultMaterial: {fileID: 15303, guid: 0000000000000000f000000000000000, type: 0}
+  secondaryMaterial: {fileID: 15302, guid: 0000000000000000f000000000000000, type: 0}
   minimumVerticalPlanes: 1
   minimumHorizontalPlanes: 1
 --- !u!1001 &2077871708
