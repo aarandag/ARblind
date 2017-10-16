@@ -152,7 +152,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 114141184758397380}
-          m_MethodName: SpeakTime
+          m_MethodName: IsThereAnythingNextToMe
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -161,7 +161,41 @@ MonoBehaviour:
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 0
-          m_CallState: 1
+          m_CallState: 2
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+  - Keyword: Is there any chair next to me
+    Response:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 114141184758397380}
+          m_MethodName: IsThereAnyChairNextToMe
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+  - Keyword: Is there any table next to me
+    Response:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 114141184758397380}
+          m_MethodName: IsThereAnyTableNextToMe
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
   IsGlobalListener: 1
@@ -181,6 +215,10 @@ MonoBehaviour:
   RecognizerStart: 0
   Keywords:
   - Keyword: Is there anything next to me
+    KeyCode: 63
+  - Keyword: Is there any chair next to me
+    KeyCode: 63
+  - Keyword: Is there any table next to me
     KeyCode: 63
   RecognitionConfidenceLevel: 0
 --- !u!114 &114997812558617602
