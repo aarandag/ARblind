@@ -10,8 +10,21 @@ public class TextToSpeechManager : MonoBehaviour {
         textToSpeech = GetComponent<TextToSpeech>();
     }
 
-    public void SpeakTime()
+    // Response whether or not there is someting next to me
+    public void IsThereAnythingNextToMe()
     {
-        textToSpeech.StartSpeaking("No! You can walk altough you should take care");
+        textToSpeech.StartSpeaking("There isn't anything next to me");
+    }
+
+    // Response whether or not there is some chair next to me
+    public void IsThereAnyChairNextToMe()
+    {
+        textToSpeech.StartSpeaking("There isn't any chair next to me");
+    }
+
+    // Response whether or not there is some table next to me
+    public void IsThereAnyTableNextToMe()
+    {
+        textToSpeech.StartSpeaking("There isn't any table next to me");
     }
 }
