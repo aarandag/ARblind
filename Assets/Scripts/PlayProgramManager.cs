@@ -4,6 +4,9 @@ using UnityEngine;
 using HoloToolkit.Unity.InputModule;
 using HoloToolkit.Unity.SpatialMapping;
 
+/// <summary>
+/// PlayProgramManager is a class that runs the scan of the environment
+/// </summary>
 public class PlayProgramManager : Singleton<PlayProgramManager>, IInputClickHandler
 {
     [Tooltip("Minimum area for complete scan")]
