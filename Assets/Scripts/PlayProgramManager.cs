@@ -1,153 +1,180 @@
-﻿using HoloToolkit.Unity;
-using HoloToolkit.Unity.SpatialMapping;
-using System.Collections.Generic;
+﻿using System;
+using HoloToolkit.Unity;
 using UnityEngine;
+using HoloToolkit.Unity.InputModule;
+using HoloToolkit.Unity.SpatialMapping;
 
-/// <summary>
-/// The PlayProgramManager class allows applications to scan the environment for a specified amount of time 
-/// and then process the Spatial Mapping Mesh (find planes, remove vertices) after that time has expired.
-/// </summary>
-public class PlayProgramManager : Singleton<PlayProgramManager>
+public class PlayProgramManager : Singleton<PlayProgramManager>, IInputClickHandler
 {
-    [Tooltip("How much time (in seconds) that the SurfaceObserver will run after being started; used when 'Limit Scanning By Time' is checked.")]
-    public float scanTime = 30.0f;
+    [Tooltip("Minimum area for complete scan")]
+    public float MinAreaForComplete = 30.0f;
 
-    [Tooltip("Material to use when rendering Spatial Mapping meshes while the observer is running.")]
-    public Material defaultMaterial;
+    [Tooltip("Minimum horizontal area for complete scan")]
+    public float MinHorizAreaForComplete = 20.0f;
 
-    [Tooltip("Optional Material to use when rendering Spatial Mapping meshes after the observer has been stopped.")]
-    public Material secondaryMaterial;
+    [Tooltip("Minimum wall area for complete scan")]
+    public float MinWallAreaForComplete = 5.0f;
 
-    [Tooltip("Minimum number of vertical planes required in order to exit scanning/processing mode.")]
-    public uint minimumVerticalPlanes = 1;
+    [Tooltip("Object to convert text into speech")]
+    public TextToSpeech textToSpeech;
 
-    [Tooltip("Minimum number of horizontal planes required in order to exit scanning/processing mode.")]
-    public uint minimumHorizontalPlanes = 1;
+    [Tooltip("Display that shows the user what has to do")]
+    public TextMesh ScanDisplay;
 
-    /// <summary>
-    /// Indicates if processing of the surface meshes is complete.
-    /// </summary>
-    private bool meshesProcessed = false;
+    private bool _scanComplete = false;
+    private bool _minScanRequirements = false;
+    private uint trackedHandsCount = 0;
 
-    /// <summary>
-    /// GameObject initialization.
-    /// </summary>
-    private void Start()
+    void Start()
     {
-        // Update surfaceObserver and storedMeshes to use the same material during scanning.
-        SpatialMappingManager.Instance.SetSurfaceMaterial(defaultMaterial);
+        SpatialUnderstanding.Instance.ScanStateChanged += Instance_ScanStateChanged;
+        SpatialUnderstanding.Instance.RequestBeginScanning();
+    }
 
-        // Register for the MakePlanesComplete event.
-        SurfaceMeshesToPlanes.Instance.MakePlanesComplete += SurfaceMeshesToPlanes_MakePlanesComplete;
+    private void Instance_ScanStateChanged()
+    {
+        if ((SpatialUnderstanding.Instance.ScanState == SpatialUnderstanding.ScanStates.Done)
+            && SpatialUnderstanding.Instance.AllowSpatialUnderstanding)
+        {
+            _scanComplete = true;
+        }
+    }
+
+    void Update()
+    {
+        if (ScanDisplay != null)
+        {
+            ScanDisplay.text = PrimaryText;
+            ScanDisplay.color = PrimaryColor;
+        }
     }
 
     /// <summary>
-    /// Called once per frame.
+    /// Help the user to scan the environment
     /// </summary>
-    private void Update()
+    public string PrimaryText
     {
-        // Check to see if the spatial mapping data has been processed yet.
-        if (!meshesProcessed)
+        get
         {
-            // Check to see if enough scanning time has passed
-            // since starting the observer.
-            if ((Time.unscaledTime - SpatialMappingManager.Instance.StartTime) < scanTime)
+            // Scan state
+            if (SpatialUnderstanding.Instance.AllowSpatialUnderstanding)
             {
-                // If we have a limited scanning time, then we should wait until
-                // enough time has passed before processing the mesh.
-            }
-            else
-            {
-                // The user should be done scanning their environment,
-                // so start processing the spatial mapping data...
-
-                if (SpatialMappingManager.Instance.IsObserverRunning())
+                switch (SpatialUnderstanding.Instance.ScanState)
                 {
-                    // Stop the observer.
-                    SpatialMappingManager.Instance.StopObserver();
+                    case SpatialUnderstanding.ScanStates.Scanning:
+                        // Get the scan stats
+                        IntPtr statsPtr = SpatialUnderstanding.Instance.UnderstandingDLL.GetStaticPlayspaceStatsPtr();
+                        if (SpatialUnderstandingDll.Imports.QueryPlayspaceStats(statsPtr) == 0)
+                        {
+                            CreateSpeech("playspace stats query failed");
+                            return "playspace stats query failed";
+                        }
+
+                        // The stats tell us if we could potentially finish
+                        if (DoesScanMeetMinBarForCompletion)
+                        {
+                            CreateSpeech("When ready, air tap to finalize your playspace");
+                            return "When ready, air tap to finalize your playspace";
+                        }
+                        CreateSpeech("Move around and scan in your playspace");
+                        return "Move around and scan in your playspace";
+                    case SpatialUnderstanding.ScanStates.Finishing:
+                        CreateSpeech("Finalizing scan");
+                        return "Finalizing scan (please wait)";
+                    case SpatialUnderstanding.ScanStates.Done:
+                        CreateSpeech("Scan complete");
+                        return "Scan complete";
+                    default:
+                        CreateSpeech(SpatialUnderstanding.Instance.ScanState.ToString());
+                        return "ScanState = " + SpatialUnderstanding.Instance.ScanState.ToString();
                 }
-
-                // Call CreatePlanes() to generate planes.
-                CreatePlanes();
-
-                // Set meshesProcessed to true.
-                meshesProcessed = true;
             }
+            return "";
         }
     }
 
     /// <summary>
-    /// Handler for the SurfaceMeshesToPlanes MakePlanesComplete event.
+    /// Check whether or not the scan has completed its requirements
     /// </summary>
-    /// <param name="source">Source of the event.</param>
-    /// <param name="args">Args for the event.</param>
-    private void SurfaceMeshesToPlanes_MakePlanesComplete(object source, System.EventArgs args)
+    public bool DoesScanMeetMinBarForCompletion
     {
-        // Collection of horizontal planes that we can use to set horizontal items on.
-        List<GameObject> horizontal = new List<GameObject>();
-
-        // Collection of vertical planes that we can use to set vertical items on.
-        List<GameObject> vertical = new List<GameObject>();
-
-        horizontal = SurfaceMeshesToPlanes.Instance.GetActivePlanes(PlaneTypes.Floor | PlaneTypes.Table);
-        vertical = SurfaceMeshesToPlanes.Instance.GetActivePlanes(PlaneTypes.Wall);
-
-        // Check to see if we have enough floors (minimumFloors) to start processing.
-        if (horizontal.Count >= minimumHorizontalPlanes && vertical.Count >= minimumVerticalPlanes)
+        get
         {
-            // Reduce our triangle count by removing any triangles
-            // from SpatialMapping meshes that intersect with active planes.
-            RemoveVertices(SurfaceMeshesToPlanes.Instance.ActivePlanes);
+            // Only allow this when we are actually scanning
+            if ((SpatialUnderstanding.Instance.ScanState != SpatialUnderstanding.ScanStates.Scanning) ||
+                (!SpatialUnderstanding.Instance.AllowSpatialUnderstanding))
+            {
+                return false;
+            }
 
-            // After scanning is over, switch to the secondary (occlusion) material.
-            SpatialMappingManager.Instance.SetSurfaceMaterial(secondaryMaterial);
-        }
-        else
-        {
-            // Re-enter scanning mode so the user can find more surfaces before processing.
-            SpatialMappingManager.Instance.StartObserver();
+            // Query the current playspace stats
+            var statsPtr = SpatialUnderstanding.Instance.UnderstandingDLL.GetStaticPlayspaceStatsPtr();
+            if (SpatialUnderstandingDll.Imports.QueryPlayspaceStats(statsPtr) == 0)
+            {
+                return false;
+            }
+            var stats = SpatialUnderstanding.Instance.UnderstandingDLL.GetStaticPlayspaceStats();
 
-            // Re-process spatial data after scanning completes.
-            meshesProcessed = false;
+            // Check our preset requirements
+            if ((stats.TotalSurfaceArea > MinAreaForComplete) ||
+                (stats.HorizSurfaceArea > MinHorizAreaForComplete) ||
+                (stats.WallSurfaceArea > MinWallAreaForComplete))
+            {
+                _minScanRequirements = true;
+                return true;
+            }
+            return false;
         }
     }
 
     /// <summary>
-    /// Creates planes from the spatial mapping surfaces.
+    /// Change color of the ScanDisplay depending on the scan state
     /// </summary>
-    private void CreatePlanes()
+    public Color PrimaryColor
     {
-        // Generate planes based on the spatial map.
-        SurfaceMeshesToPlanes surfaceToPlanes = SurfaceMeshesToPlanes.Instance;
-        if (surfaceToPlanes != null && surfaceToPlanes.enabled)
+        get
         {
-            surfaceToPlanes.MakePlanes();
+            if (SpatialUnderstanding.Instance.ScanState == SpatialUnderstanding.ScanStates.Scanning)
+            {
+                if (trackedHandsCount > 0)
+                {
+                    return DoesScanMeetMinBarForCompletion ? Color.green : Color.red;
+                }
+                return DoesScanMeetMinBarForCompletion ? Color.yellow : Color.white;
+            }
+            return Color.white;
         }
     }
 
     /// <summary>
-    /// Removes triangles from the spatial mapping surfaces.
+    /// Converts text to speech
     /// </summary>
-    /// <param name="boundingObjects"></param>
-    private void RemoveVertices(IEnumerable<GameObject> boundingObjects)
+    /// <param name="speech"></param>
+    private void CreateSpeech(string speech)
     {
-        RemoveSurfaceVertices removeVerts = RemoveSurfaceVertices.Instance;
-        if (removeVerts != null && removeVerts.enabled)
-        {
-            removeVerts.RemoveSurfaceVerticesWithinBounds(boundingObjects);
-        }
+        // Create speech
+        var msg = string.Format(speech);
+
+        // Speak message
+        textToSpeech.StartSpeaking(msg);
     }
 
     /// <summary>
-    /// Called when the GameObject is unloaded.
+    /// Tap the text to finalize the scan
     /// </summary>
-    protected override void OnDestroy()
+    /// <param name="eventData"></param>
+    public void OnInputClicked(InputClickedEventData eventData)
     {
-        if (SurfaceMeshesToPlanes.Instance != null)
+        if ((SpatialUnderstanding.Instance.ScanState == SpatialUnderstanding.ScanStates.Scanning) &&
+            !SpatialUnderstanding.Instance.ScanStatsReportStillWorking && _minScanRequirements)
         {
-            SurfaceMeshesToPlanes.Instance.MakePlanesComplete -= SurfaceMeshesToPlanes_MakePlanesComplete;
-        }
+            SpatialUnderstanding.Instance.RequestFinishScan();
+            _scanComplete = true;
+            ScanDisplay.text = "";
 
-        base.OnDestroy();
+            // hide mesh
+            var customMesh = SpatialUnderstanding.Instance.GetComponent<SpatialUnderstandingCustomMesh>();
+            customMesh.DrawProcessedMesh = false;
+        }
     }
 }
