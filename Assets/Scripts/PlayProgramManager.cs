@@ -2,13 +2,15 @@
 using HoloToolkit.Unity;
 using UnityEngine;
 using HoloToolkit.Unity.InputModule;
-using HoloToolkit.Unity.SpatialMapping;
+using HoloToolkit.Examples.SpatialUnderstandingFeatureOverview;
+using System.Collections;
 
 /// <summary>
 /// PlayProgramManager is a class that runs the scan of the environment
 /// </summary>
 public class PlayProgramManager : Singleton<PlayProgramManager>, IInputClickHandler
 {
+    // Config
     [Tooltip("Minimum area for complete scan")]
     public float MinAreaForComplete = 30.0f;
 
@@ -24,9 +26,41 @@ public class PlayProgramManager : Singleton<PlayProgramManager>, IInputClickHand
     [Tooltip("Display that shows the user what has to do")]
     public TextMesh ScanDisplay;
 
+    [Tooltip("Object that allows to understand the things that we are looking at")]
+    public SpatialUnderstandingCursor AppCursor;
+
     private bool _scanComplete = false;
     private bool _minScanRequirements = false;
+    private string spaceQueryDescription;
+    private string objectPlacementDescription;
     private uint trackedHandsCount = 0;
+
+    // Properties
+    public string SpaceQueryDescription
+    {
+        get
+        {
+            return spaceQueryDescription;
+        }
+        set
+        {
+            spaceQueryDescription = value;
+            objectPlacementDescription = "";
+        }
+    }
+
+    public string ObjectPlacementDescription
+    {
+        get
+        {
+            return objectPlacementDescription;
+        }
+        set
+        {
+            objectPlacementDescription = value;
+            spaceQueryDescription = "";
+        }
+    }
 
     void Start()
     {
@@ -43,9 +77,9 @@ public class PlayProgramManager : Singleton<PlayProgramManager>, IInputClickHand
         }
     }
 
-    void Update()
+    private void Update()
     {
-        if (ScanDisplay != null)
+        if (ScanDisplay.gameObject.activeSelf)
         {
             ScanDisplay.text = PrimaryText;
             ScanDisplay.color = PrimaryColor;
@@ -59,6 +93,16 @@ public class PlayProgramManager : Singleton<PlayProgramManager>, IInputClickHand
     {
         get
         {
+            // Display the space and object query results (has priority)
+            if (!string.IsNullOrEmpty(SpaceQueryDescription))
+            {
+                return SpaceQueryDescription;
+            }
+            else if (!string.IsNullOrEmpty(ObjectPlacementDescription))
+            {
+                return ObjectPlacementDescription;
+            }
+
             // Scan state
             if (SpatialUnderstanding.Instance.AllowSpatialUnderstanding)
             {
@@ -69,26 +113,26 @@ public class PlayProgramManager : Singleton<PlayProgramManager>, IInputClickHand
                         IntPtr statsPtr = SpatialUnderstanding.Instance.UnderstandingDLL.GetStaticPlayspaceStatsPtr();
                         if (SpatialUnderstandingDll.Imports.QueryPlayspaceStats(statsPtr) == 0)
                         {
-                            CreateSpeech("playspace stats query failed");
+                            //CreateSpeech("playspace stats query failed");
                             return "playspace stats query failed";
                         }
 
                         // The stats tell us if we could potentially finish
                         if (DoesScanMeetMinBarForCompletion)
                         {
-                            CreateSpeech("When ready, air tap to finalize your playspace");
+                            //CreateSpeech("When ready, air tap to finalize your playspace");
                             return "When ready, air tap to finalize your playspace";
                         }
-                        CreateSpeech("Move around and scan in your playspace");
+                        //CreateSpeech("Move around and scan in your playspace");
                         return "Move around and scan in your playspace";
                     case SpatialUnderstanding.ScanStates.Finishing:
-                        CreateSpeech("Finalizing scan");
+                        //CreateSpeech("Finalizing scan");
                         return "Finalizing scan (please wait)";
                     case SpatialUnderstanding.ScanStates.Done:
-                        CreateSpeech("Scan complete");
+                        //CreateSpeech("Scan complete");
                         return "Scan complete";
                     default:
-                        CreateSpeech(SpatialUnderstanding.Instance.ScanState.ToString());
+                        //CreateSpeech(SpatialUnderstanding.Instance.ScanState.ToString());
                         return "ScanState = " + SpatialUnderstanding.Instance.ScanState.ToString();
                 }
             }
@@ -145,7 +189,16 @@ public class PlayProgramManager : Singleton<PlayProgramManager>, IInputClickHand
                 }
                 return DoesScanMeetMinBarForCompletion ? Color.yellow : Color.white;
             }
-            return Color.white;
+
+            // If we're looking at the menu, fade it out
+            Vector3 hitPos, hitNormal;
+            UnityEngine.UI.Button hitButton;
+            float alpha = AppCursor.RayCastUI(out hitPos, out hitNormal, out hitButton) ? 0.15f : 1.0f;
+
+            // Special case processing & 
+            return (!string.IsNullOrEmpty(SpaceQueryDescription) || !string.IsNullOrEmpty(ObjectPlacementDescription)) ?
+                (PrimaryText.Contains("processing") ? new Color(1.0f, 0.0f, 0.0f, 1.0f) : new Color(1.0f, 0.7f, 0.1f, alpha)) :
+                new Color(1.0f, 1.0f, 1.0f, alpha);
         }
     }
 
@@ -177,7 +230,7 @@ public class PlayProgramManager : Singleton<PlayProgramManager>, IInputClickHand
 
             // hide mesh
             var customMesh = SpatialUnderstanding.Instance.GetComponent<SpatialUnderstandingCustomMesh>();
-            customMesh.DrawProcessedMesh = false;
+            //customMesh.DrawProcessedMesh = false;
         }
     }
 }
