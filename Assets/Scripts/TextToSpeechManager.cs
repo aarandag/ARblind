@@ -1,5 +1,6 @@
 ﻿using HoloToolkit.Examples.SpatialUnderstandingFeatureOverview;
 using HoloToolkit.Unity;
+using System.Collections;
 using System.Text.RegularExpressions;
 using UnityEngine;
 
@@ -24,9 +25,7 @@ public class TextToSpeechManager : MonoBehaviour {
     {
         textToSpeech.StartSpeaking("There is something next to me");
         PlayVisualizer.Instance.Query_Shape_FindShapeHalfDims("All Surfaces");
-        string number_shapes = ScanDisplay.text;
-        var resultString = Regex.Match(number_shapes, @"\d+").Value; // \d + is the regex for an integer number
-        n_objects = int.Parse(resultString);
+        StartCoroutine(WaitForObtainNumberOfObjects());
         if (n_objects <= 0)
         {
             textToSpeech.StartSpeaking("There is not anything next to me");
@@ -42,9 +41,7 @@ public class TextToSpeechManager : MonoBehaviour {
     {
         textToSpeech.StartSpeaking("There is some chair next to me");
         PlayVisualizer.Instance.Query_Shape_FindShapeHalfDims("Sittable");
-        string number_shapes = ScanDisplay.text;
-        var resultString = Regex.Match(number_shapes, @"\d+").Value; // \d + is the regex for an integer number
-        n_objects = int.Parse(resultString);
+        StartCoroutine(WaitForObtainNumberOfObjects());
         if (n_objects <= 0)
         {
             textToSpeech.StartSpeaking("There is no any chair next to me");
@@ -60,9 +57,7 @@ public class TextToSpeechManager : MonoBehaviour {
     {
         textToSpeech.StartSpeaking("There is some table next to me");
         PlayVisualizer.Instance.Query_Shape_FindShapeHalfDims("Large Empty Surface");
-        string number_shapes = ScanDisplay.text;
-        var resultString = Regex.Match(number_shapes, @"\d+").Value; // \d + is the regex for an integer number
-        n_objects = int.Parse(resultString);
+        StartCoroutine(WaitForObtainNumberOfObjects());
         if (n_objects <= 0)
         {
             textToSpeech.StartSpeaking("There is no table next to me");
@@ -71,5 +66,17 @@ public class TextToSpeechManager : MonoBehaviour {
         {
             textToSpeech.StartSpeaking("There is some table next to me");
         }
+    }
+
+    /// <summary>
+    /// Wait for 3 seconds to obtain the number of the objects that have been found
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator WaitForObtainNumberOfObjects()
+    {
+        yield return new WaitForSeconds(3.0f);
+        string number_shapes = ScanDisplay.text;
+        var resultString = Regex.Match(number_shapes, @"\d+").Value; // \d + is the regex for an integer number
+        n_objects = int.Parse(resultString);
     }
 }
