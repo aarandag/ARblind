@@ -446,6 +446,51 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114206435194148930, guid: d379ed0a5618c9f479f58bd83a2d0ad3,
+        type: 2}
+      propertyPath: Keywords.Array.data[0].Keyword
+      value: anything
+      objectReference: {fileID: 0}
+    - target: {fileID: 114206435194148930, guid: d379ed0a5618c9f479f58bd83a2d0ad3,
+        type: 2}
+      propertyPath: Keywords.Array.data[1].Keyword
+      value: chair
+      objectReference: {fileID: 0}
+    - target: {fileID: 114206435194148930, guid: d379ed0a5618c9f479f58bd83a2d0ad3,
+        type: 2}
+      propertyPath: Keywords.Array.data[2].Keyword
+      value: table
+      objectReference: {fileID: 0}
+    - target: {fileID: 114522294426658886, guid: d379ed0a5618c9f479f58bd83a2d0ad3,
+        type: 2}
+      propertyPath: Keywords.Array.data[0].Keyword
+      value: chair
+      objectReference: {fileID: 0}
+    - target: {fileID: 114522294426658886, guid: d379ed0a5618c9f479f58bd83a2d0ad3,
+        type: 2}
+      propertyPath: Keywords.Array.data[2].Keyword
+      value: anything
+      objectReference: {fileID: 0}
+    - target: {fileID: 114522294426658886, guid: d379ed0a5618c9f479f58bd83a2d0ad3,
+        type: 2}
+      propertyPath: Keywords.Array.data[1].Keyword
+      value: table
+      objectReference: {fileID: 0}
+    - target: {fileID: 114522294426658886, guid: d379ed0a5618c9f479f58bd83a2d0ad3,
+        type: 2}
+      propertyPath: Keywords.Array.data[2].Response.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: IsThereAnythingNextToMe
+      objectReference: {fileID: 0}
+    - target: {fileID: 114522294426658886, guid: d379ed0a5618c9f479f58bd83a2d0ad3,
+        type: 2}
+      propertyPath: Keywords.Array.data[1].Response.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: IsThereAnyTableNextToMe
+      objectReference: {fileID: 0}
+    - target: {fileID: 114522294426658886, guid: d379ed0a5618c9f479f58bd83a2d0ad3,
+        type: 2}
+      propertyPath: Keywords.Array.data[0].Response.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: IsThereAnyChairNextToMe
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d379ed0a5618c9f479f58bd83a2d0ad3, type: 2}
   m_IsPrefabParent: 0

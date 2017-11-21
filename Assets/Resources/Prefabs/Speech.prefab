@@ -147,7 +147,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Keywords:
-  - Keyword: Is there anything next to me
+  - Keyword: anything
     Response:
       m_PersistentCalls:
         m_Calls:
@@ -164,7 +164,7 @@ MonoBehaviour:
           m_CallState: 2
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
-  - Keyword: Is there any chair next to me
+  - Keyword: chair
     Response:
       m_PersistentCalls:
         m_Calls:
@@ -181,7 +181,7 @@ MonoBehaviour:
           m_CallState: 2
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
-  - Keyword: Is there any table next to me
+  - Keyword: table
     Response:
       m_PersistentCalls:
         m_Calls:
@@ -214,11 +214,11 @@ MonoBehaviour:
   PersistentKeywords: 0
   RecognizerStart: 0
   Keywords:
-  - Keyword: Is there anything next to me
+  - Keyword: anything
     KeyCode: 63
-  - Keyword: Is there any chair next to me
+  - Keyword: chair
     KeyCode: 63
-  - Keyword: Is there any table next to me
+  - Keyword: table
     KeyCode: 63
   RecognitionConfidenceLevel: 0
 --- !u!114 &114997812558617602
