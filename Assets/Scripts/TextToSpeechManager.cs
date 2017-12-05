@@ -8,6 +8,7 @@ public class TextToSpeechManager : MonoBehaviour {
 
     private TextToSpeech textToSpeech;
     private TextMesh ScanDisplay;
+    private TextMesh textCursor;
     private int n_objects;
 
     private void Awake()
@@ -18,12 +19,12 @@ public class TextToSpeechManager : MonoBehaviour {
     private void Start()
     {
         ScanDisplay = GameObject.Find("ProgramManager").GetComponentInChildren<TextMesh>();
+        textCursor = GameObject.Find("Cursor").GetComponentInChildren<TextMesh>();
     }
 
     // Response whether or not there is someting next to me
     public void IsThereAnythingNextToMe()
     {
-        textToSpeech.StartSpeaking("There is something next to me");
         PlayVisualizer.Instance.Query_Shape_FindShapeHalfDims("All Surfaces");
         StartCoroutine(WaitForObtainNumberOfObjects());
         if (n_objects <= 0)
@@ -39,7 +40,6 @@ public class TextToSpeechManager : MonoBehaviour {
     // Response whether or not there is some chair next to me
     public void IsThereAnyChairNextToMe()
     {
-        textToSpeech.StartSpeaking("There is some chair next to me");
         PlayVisualizer.Instance.Query_Shape_FindShapeHalfDims("Sittable");
         StartCoroutine(WaitForObtainNumberOfObjects());
         if (n_objects <= 0)
@@ -48,14 +48,13 @@ public class TextToSpeechManager : MonoBehaviour {
         }
         else
         {
-            textToSpeech.StartSpeaking("There is some chair next to me");
+            textToSpeech.StartSpeaking("There is some chairs next to me");
         }
     }
 
     // Response whether or not there is some table next to me
     public void IsThereAnyTableNextToMe()
     {
-        textToSpeech.StartSpeaking("There is some table next to me");
         PlayVisualizer.Instance.Query_Shape_FindShapeHalfDims("Large Empty Surface");
         StartCoroutine(WaitForObtainNumberOfObjects());
         if (n_objects <= 0)
@@ -64,7 +63,25 @@ public class TextToSpeechManager : MonoBehaviour {
         }
         else
         {
-            textToSpeech.StartSpeaking("There is some table next to me");
+            textToSpeech.StartSpeaking("There is some tables next to me");
+        }
+    }
+
+    // Response the distance between person and object
+    public void WhatIsTheDistanceBetweenPersonObject()
+    {
+        Vector3 headPosition = Camera.main.transform.position;
+        Vector3 headDirection = Camera.main.transform.forward;
+
+        RaycastHit hitInfo;
+
+        if(Physics.Raycast(headPosition, headDirection, out hitInfo))
+        {
+            textToSpeech.StartSpeaking("The distance between " + textCursor.text + " and person is " + hitInfo.distance);
+        }
+        else
+        {
+            textToSpeech.StartSpeaking("The distance cannot be recognized");
         }
     }
 

@@ -446,51 +446,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114206435194148930, guid: d379ed0a5618c9f479f58bd83a2d0ad3,
-        type: 2}
-      propertyPath: Keywords.Array.data[0].Keyword
-      value: anything
-      objectReference: {fileID: 0}
-    - target: {fileID: 114206435194148930, guid: d379ed0a5618c9f479f58bd83a2d0ad3,
-        type: 2}
-      propertyPath: Keywords.Array.data[1].Keyword
-      value: chair
-      objectReference: {fileID: 0}
-    - target: {fileID: 114206435194148930, guid: d379ed0a5618c9f479f58bd83a2d0ad3,
-        type: 2}
-      propertyPath: Keywords.Array.data[2].Keyword
-      value: table
-      objectReference: {fileID: 0}
-    - target: {fileID: 114522294426658886, guid: d379ed0a5618c9f479f58bd83a2d0ad3,
-        type: 2}
-      propertyPath: Keywords.Array.data[0].Keyword
-      value: chair
-      objectReference: {fileID: 0}
-    - target: {fileID: 114522294426658886, guid: d379ed0a5618c9f479f58bd83a2d0ad3,
-        type: 2}
-      propertyPath: Keywords.Array.data[2].Keyword
-      value: anything
-      objectReference: {fileID: 0}
-    - target: {fileID: 114522294426658886, guid: d379ed0a5618c9f479f58bd83a2d0ad3,
-        type: 2}
-      propertyPath: Keywords.Array.data[1].Keyword
-      value: table
-      objectReference: {fileID: 0}
-    - target: {fileID: 114522294426658886, guid: d379ed0a5618c9f479f58bd83a2d0ad3,
-        type: 2}
-      propertyPath: Keywords.Array.data[2].Response.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: IsThereAnythingNextToMe
-      objectReference: {fileID: 0}
-    - target: {fileID: 114522294426658886, guid: d379ed0a5618c9f479f58bd83a2d0ad3,
-        type: 2}
-      propertyPath: Keywords.Array.data[1].Response.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: IsThereAnyTableNextToMe
-      objectReference: {fileID: 0}
-    - target: {fileID: 114522294426658886, guid: d379ed0a5618c9f479f58bd83a2d0ad3,
-        type: 2}
-      propertyPath: Keywords.Array.data[0].Response.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: IsThereAnyChairNextToMe
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d379ed0a5618c9f479f58bd83a2d0ad3, type: 2}
   m_IsPrefabParent: 0
@@ -744,64 +699,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!1 &1284223043
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1284223044}
-  - component: {fileID: 1284223046}
-  - component: {fileID: 1284223045}
-  m_Layer: 0
-  m_Name: Visualizer_ShapeSolver
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1284223044
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1284223043}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1812161694}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1284223045
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1284223043}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ca97ee2fd7a30b41b1db4887b909d4a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MaterialLine: {fileID: 2100000, guid: 39e3b8a7d15fa654fbc3a9a4d1e41477, type: 2}
---- !u!114 &1284223046
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1284223043}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 211e5aef0e9eeb041a346fb500524e57, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &1812161694 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 4341712529311554, guid: d379ed0a5618c9f479f58bd83a2d0ad3,
-    type: 2}
-  m_PrefabInternal: {fileID: 737411188}
 --- !u!1 &1896314333
 GameObject:
   m_ObjectHideFlags: 0
