@@ -6,6 +6,32 @@ using HoloToolkit.Examples.SpatialUnderstandingFeatureOverview;
 using System.Collections;
 
 /// <summary>
+/// Speech phase states
+/// </summary>
+public enum SpeechPhase
+{
+    /// <summary>
+    /// Speech phase is stopped
+    /// </summary>
+    Stopped = 0,
+
+    /// <summary>
+    /// Scanning
+    /// </summary>
+    Scanning = 1,
+
+    /// <summary>
+    /// Ready to tap
+    /// </summary>
+    Finalizing = 2,
+
+    /// <summary>
+    /// Scan completed
+    /// </summary>
+    Completed = 3
+}
+
+/// <summary>
 /// PlayProgramManager is a class that runs the scan of the environment
 /// </summary>
 public class PlayProgramManager : Singleton<PlayProgramManager>, IInputClickHandler
@@ -28,6 +54,11 @@ public class PlayProgramManager : Singleton<PlayProgramManager>, IInputClickHand
 
     [Tooltip("Object that allows to understand the things that we are looking at")]
     public SpatialUnderstandingCursor AppCursor;
+
+    /// <summary>
+    /// Indicates the current state of the Speech Phase.
+    /// </summary>
+    public SpeechPhase speechPhase { get; private set; }
 
     private bool _scanComplete = false;
     private bool _minScanRequirements = false;
@@ -62,7 +93,13 @@ public class PlayProgramManager : Singleton<PlayProgramManager>, IInputClickHand
         }
     }
 
-    void Start()
+    protected override void Awake()
+    {
+        base.Awake();
+        speechPhase = SpeechPhase.Scanning;
+    }
+
+    private void Start()
     {
         SpatialUnderstanding.Instance.ScanStateChanged += Instance_ScanStateChanged;
         SpatialUnderstanding.Instance.RequestBeginScanning();
@@ -113,26 +150,36 @@ public class PlayProgramManager : Singleton<PlayProgramManager>, IInputClickHand
                         IntPtr statsPtr = SpatialUnderstanding.Instance.UnderstandingDLL.GetStaticPlayspaceStatsPtr();
                         if (SpatialUnderstandingDll.Imports.QueryPlayspaceStats(statsPtr) == 0)
                         {
-                            //CreateSpeech("playspace stats query failed");
                             return "playspace stats query failed";
                         }
 
                         // The stats tell us if we could potentially finish
                         if (DoesScanMeetMinBarForCompletion)
                         {
-                            //CreateSpeech("When ready, air tap to finalize your playspace");
+                            if (speechPhase == SpeechPhase.Finalizing)
+                            {
+                                CreateSpeech("When ready, air tap to finalize your playspace");
+                                speechPhase = SpeechPhase.Completed;
+                            }
                             return "When ready, air tap to finalize your playspace";
                         }
-                        //CreateSpeech("Move around and scan in your playspace");
+
+                        if (speechPhase == SpeechPhase.Scanning)
+                        {
+                            CreateSpeech("Move around and scan in your playspace");
+                            speechPhase = SpeechPhase.Finalizing;
+                        }
                         return "Move around and scan in your playspace";
                     case SpatialUnderstanding.ScanStates.Finishing:
-                        //CreateSpeech("Finalizing scan");
                         return "Finalizing scan (please wait)";
                     case SpatialUnderstanding.ScanStates.Done:
-                        //CreateSpeech("Scan complete");
+                        if (speechPhase == SpeechPhase.Completed)
+                        {
+                            CreateSpeech("Scan complete");
+                            speechPhase = SpeechPhase.Stopped;
+                        }
                         return "Scan complete";
                     default:
-                        //CreateSpeech(SpatialUnderstanding.Instance.ScanState.ToString());
                         return "ScanState = " + SpatialUnderstanding.Instance.ScanState.ToString();
                 }
             }
@@ -212,7 +259,8 @@ public class PlayProgramManager : Singleton<PlayProgramManager>, IInputClickHand
         var msg = string.Format(speech);
 
         // Speak message
-        textToSpeech.StartSpeaking(msg);
+        //textToSpeech.StartSpeaking(msg);
+        Debug.Log(speech);
     }
 
     /// <summary>
