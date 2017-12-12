@@ -77,7 +77,7 @@ public class TextToSpeechManager : MonoBehaviour {
 
         if(Physics.Raycast(headPosition, headDirection, out hitInfo))
         {
-            textToSpeech.StartSpeaking("The distance between " + textCursor.text + " and person is " + hitInfo.distance);
+            textToSpeech.StartSpeaking("The distance between " + textCursor.text + " and you is " + hitInfo.distance);
         }
         else
         {

@@ -259,8 +259,8 @@ public class PlayProgramManager : Singleton<PlayProgramManager>, IInputClickHand
         var msg = string.Format(speech);
 
         // Speak message
-        //textToSpeech.StartSpeaking(msg);
-        Debug.Log(speech);
+        textToSpeech.StartSpeaking(msg);
+        //Debug.Log(speech);
     }
 
     /// <summary>

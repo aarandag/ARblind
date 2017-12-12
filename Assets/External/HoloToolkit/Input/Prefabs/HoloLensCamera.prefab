@@ -821,11 +821,11 @@ MonoBehaviour:
   Keywords:
   - Keyword: anything
     KeyCode: 63
-  - Keyword: chair
-    KeyCode: 63
   - Keyword: table
     KeyCode: 63
-  - Keyword: distance
+  - Keyword: sittable
+    KeyCode: 63
+  - Keyword: space
     KeyCode: 63
   RecognitionConfidenceLevel: 0
 --- !u!114 &114522294426658886
@@ -840,23 +840,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Keywords:
-  - Keyword: chair
-    Response:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 114761515568537906}
-          m_MethodName: IsThereAnyChairNextToMe
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
   - Keyword: table
     Response:
       m_PersistentCalls:
@@ -891,7 +874,24 @@ MonoBehaviour:
           m_CallState: 2
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
-  - Keyword: distance
+  - Keyword: sittable
+    Response:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 114761515568537906}
+          m_MethodName: IsThereAnyChairNextToMe
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+  - Keyword: space
     Response:
       m_PersistentCalls:
         m_Calls:
