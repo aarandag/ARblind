@@ -260,7 +260,6 @@ public class PlayProgramManager : Singleton<PlayProgramManager>, IInputClickHand
 
         // Speak message
         textToSpeech.StartSpeaking(msg);
-        //Debug.Log(speech);
     }
 
     /// <summary>
@@ -278,7 +277,6 @@ public class PlayProgramManager : Singleton<PlayProgramManager>, IInputClickHand
 
             // hide mesh
             var customMesh = SpatialUnderstanding.Instance.GetComponent<SpatialUnderstandingCustomMesh>();
-            //customMesh.DrawProcessedMesh = false;
         }
     }
 }

@@ -7,7 +7,6 @@ using UnityEngine;
 public class TextToSpeechManager : MonoBehaviour {
 
     private TextToSpeech textToSpeech;
-    private TextMesh ScanDisplay;
     private TextMesh textCursor;
     private int n_objects;
 
@@ -18,7 +17,6 @@ public class TextToSpeechManager : MonoBehaviour {
 
     private void Start()
     {
-        ScanDisplay = GameObject.Find("ProgramManager").GetComponentInChildren<TextMesh>();
         textCursor = GameObject.Find("Cursor").GetComponentInChildren<TextMesh>();
     }
 
@@ -58,7 +56,7 @@ public class TextToSpeechManager : MonoBehaviour {
         {
             float rounded = (float)(System.Math.Round((double)hitInfo.distance, 2));
             textToSpeech.StartSpeaking("The distance between " + textCursor.text + " and you is " + rounded);
-            ScanDisplay.text = "Distance to "+ textCursor.text + ": "+rounded;
+            PlayProgramManager.Instance.SpaceQueryDescription = "Distance to "+ textCursor.text + ": "+rounded;
 
         }
         else
@@ -74,7 +72,7 @@ public class TextToSpeechManager : MonoBehaviour {
     private IEnumerator WaitForObtainNumberOfObjects(string type)
     {
         yield return new WaitForSeconds(3.0f);
-        string number_shapes = ScanDisplay.text;
+        string number_shapes = PlayProgramManager.Instance.SpaceQueryDescription;
         var resultString = Regex.Match(number_shapes, @"\d+").Value; // \d + is the regex for an integer number
         n_objects = int.Parse(resultString);
         switch (type)
@@ -109,7 +107,6 @@ public class TextToSpeechManager : MonoBehaviour {
                     textToSpeech.StartSpeaking("There are some chairs found");
                 }
                 break;
-
         }
 
     }
