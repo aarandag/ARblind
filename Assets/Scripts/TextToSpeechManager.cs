@@ -56,7 +56,10 @@ public class TextToSpeechManager : MonoBehaviour {
 
         if(Physics.Raycast(headPosition, headDirection, out hitInfo))
         {
-            textToSpeech.StartSpeaking("The distance between " + textCursor.text + " and you is " + hitInfo.distance);
+            float rounded = (float)(System.Math.Round((double)hitInfo.distance, 2));
+            textToSpeech.StartSpeaking("The distance between " + textCursor.text + " and you is " + rounded);
+            ScanDisplay.text = "Distance to "+ textCursor.text + ": "+rounded;
+
         }
         else
         {
