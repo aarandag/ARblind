@@ -16,7 +16,7 @@ surfaces so that a person with blindness can move through a room.
 * C#
 
 ## Hardware
-* Microsoft HoloLens#
+* Microsoft HoloLens
 
 ## Members
 * [Alberto Aranda García](https://github.com/aarandag)
