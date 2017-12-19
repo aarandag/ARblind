@@ -13,9 +13,10 @@ surfaces so that a person with blindness can move through a room.
 ## Software
 * Visual Studio 2015 and 2017
 * Unity
+* C#
 
 ## Hardware
-* Microsoft HoloLens
+* Microsoft HoloLens#
 
 ## Members
 * [Alberto Aranda García](https://github.com/aarandag)
