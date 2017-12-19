@@ -3,7 +3,7 @@ This repository contains the code and configuration for this project.
 
 ## About the project
 It is a hard reality that people with discapacities cannot carry out some tasks.
-Nowadays, technology advances by leaps and bounds, however, this increase of it
+Nowadays, technology advances by leaps and bounds but, this increase of it
 is not used for helping people, in the mayority of cases.
 
 Because of this, this project pretends to use technology to help them using
