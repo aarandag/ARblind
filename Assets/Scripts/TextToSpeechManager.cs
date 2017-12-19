@@ -79,31 +79,31 @@ public class TextToSpeechManager : MonoBehaviour {
             case "Anything":
                 if (n_objects <= 0)
                 {
-                    textToSpeech.StartSpeaking("There is not anything next to me");
+                    textToSpeech.StartSpeaking("There is no surface found");
                 }
                 else
                 {
-                    textToSpeech.StartSpeaking("There is something next to me");
+                    textToSpeech.StartSpeaking("There are some surfaces found");
                 }
                 break;
             case "Table":
                 if (n_objects <= 0)
                 {
-                    textToSpeech.StartSpeaking("There is no table next to me");
+                    textToSpeech.StartSpeaking("There is no table found");
                 }
                 else
                 {
-                    textToSpeech.StartSpeaking("There is some tables next to me");
+                    textToSpeech.StartSpeaking("There are some tables found");
                 }
                 break;
             case "Sittable":
                 if (n_objects <= 0)
                 {
-                    textToSpeech.StartSpeaking("There is no any chair next to me");
+                    textToSpeech.StartSpeaking("There is no any chair found");
                 }
                 else
                 {
-                    textToSpeech.StartSpeaking("There is some chairs next to me");
+                    textToSpeech.StartSpeaking("There are some chairs found");
                 }
                 break;
 
