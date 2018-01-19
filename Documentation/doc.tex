@@ -1,0 +1,94 @@
+\documentclass{pre-tfg}
+
+\usepackage{listings}
+\usepackage{formular}
+\usepackage[pdftex]{graphicx}
+\usepackage[toc,page]{appendix}
+
+\newcommand\tab[1][1cm]{\hspace*{#1}}
+
+\showhelp  % comenta o borra para eliminar ayudas
+
+\title{ARblind: system for helping people with blindness to move through a small room}
+\author{Alberto Aranda García,\\ \tab[1.6cm] Cristian Gómez Portes, \\ \tab[1.6cm] Daniel Pozo Romero}
+\advisorDepartment{Department of technology and information system}
+\intensification{COMPUTATION}
+\docdate{2017}{January}
+
+
+\DeclareGraphicsExtensions{.pdf,.png,.jpg}
+
+\usepackage{color}
+\definecolor{gray97}{gray}{.97}
+\definecolor{gray75}{gray}{.75}
+\definecolor{gray45}{gray}{.45}
+
+\lstset{ frame=Ltb,
+     framerule=0pt,
+     aboveskip=0.5cm,
+     framextopmargin=3pt,
+     framexbottommargin=3pt,
+     framexleftmargin=0.4cm,
+     framesep=0pt,
+     rulesep=.4pt,
+     backgroundcolor=\color{gray97},
+     rulesepcolor=\color{black},
+     %
+     stringstyle=\ttfamily,
+     showstringspaces = false,
+     basicstyle=\small\ttfamily,
+     commentstyle=\color{gray45},
+     keywordstyle=\bfseries,
+     %
+     numbers=left,
+     numbersep=15pt,
+     numberstyle=\tiny,
+     numberfirstline = false,
+     breaklines=true,
+   }
+
+% minimizar fragmentado de listados
+\lstnewenvironment{listing}[1][]
+   {\lstset{#1}\pagebreak[0]}{\pagebreak[0]}
+
+\lstdefinestyle{consola}
+   {basicstyle=\scriptsize\bf\ttfamily,
+    backgroundcolor=\color{gray75},
+   }
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\newpage
+
+\section{INTRODUCTION}
+
+The last decade has had a great amount of changes that have modified our lives. These have been notable in many 
+fields due to the increase of technology. It is having an enormous impact on our society up to the point that communication, 
+education and commerce are being affected by this advancement. In this way, health is also influenced by such changes, 
+not only in improving the service that hospitals provide, but also in creating tools that prevent diseases using the information 
+from other patients with similar symptoms. 
+
+However, although technology increases by leaps and bounds, the advancement towards people with disabilities is being low. 
+In the case of people with blindness, there is no a pair of glasses that allow them to move through a room recognizing objects, 
+surfaces and so on. Because of this, the necessity of creating a system that allows to detect such things is crucial since, by disgrace, 
+there is a great amount of people that suffer this disability.
+
+In this sense, the objective is to present
+
+\clearpage
+
+%\bibliographystyle{alpha}
+%\singlespacing
+%\bibliography{doc}
+
+\end{document}
+
+% Local Variables:
+% coding: utf-8
+% mode: flyspell
+% ispell-local-dictionary: "castellano8"
+% mode: latex
+% End:
