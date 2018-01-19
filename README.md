@@ -2,11 +2,11 @@
 This repository contains the code and configuration for this project.
 
 ## About the project
-It is a hard reality that people with discapacities cannot carry out some tasks.
-Nowadays, technology advances by leaps and bounds but, this increase of it
+It is a hard reality that people with disabilities cannot carry out some tasks.
+Nowadays, technology advances by leaps and bounds but, this advancement
 is not used for helping people, in the mayority of cases.
 
-Because of this, this project pretends to use technology to help them using
+Because of this, this project pretends to use immersive technology to help them using
 the Microsoft mixed-reality device, Microsoft HoloLens. It allows to identify
 surfaces so that a person with blindness can move through a room.
 
