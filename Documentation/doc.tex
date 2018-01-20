@@ -9,52 +9,11 @@
 
 \showhelp  % comenta o borra para eliminar ayudas
 
-\title{ARblind: system for helping people with blindness to move through a small room}
+\title{ARblind: a system for helping people \\ with blindness to move through a small room}
 \author{Alberto Aranda García,\\ \tab[1.6cm] Cristian Gómez Portes, \\ \tab[1.6cm] Daniel Pozo Romero}
 \advisorDepartment{Department of technology and information system}
 \intensification{COMPUTATION}
 \docdate{2017}{January}
-
-
-\DeclareGraphicsExtensions{.pdf,.png,.jpg}
-
-\usepackage{color}
-\definecolor{gray97}{gray}{.97}
-\definecolor{gray75}{gray}{.75}
-\definecolor{gray45}{gray}{.45}
-
-\lstset{ frame=Ltb,
-     framerule=0pt,
-     aboveskip=0.5cm,
-     framextopmargin=3pt,
-     framexbottommargin=3pt,
-     framexleftmargin=0.4cm,
-     framesep=0pt,
-     rulesep=.4pt,
-     backgroundcolor=\color{gray97},
-     rulesepcolor=\color{black},
-     %
-     stringstyle=\ttfamily,
-     showstringspaces = false,
-     basicstyle=\small\ttfamily,
-     commentstyle=\color{gray45},
-     keywordstyle=\bfseries,
-     %
-     numbers=left,
-     numbersep=15pt,
-     numberstyle=\tiny,
-     numberfirstline = false,
-     breaklines=true,
-   }
-
-% minimizar fragmentado de listados
-\lstnewenvironment{listing}[1][]
-   {\lstset{#1}\pagebreak[0]}{\pagebreak[0]}
-
-\lstdefinestyle{consola}
-   {basicstyle=\scriptsize\bf\ttfamily,
-    backgroundcolor=\color{gray75},
-   }
 
 \begin{document}
 
@@ -71,14 +30,49 @@ education and commerce are being affected by this advancement. In this way, heal
 not only in improving the service that hospitals provide, but also in creating tools that prevent diseases using the information 
 from other patients with similar symptoms. 
 
-However, although technology increases by leaps and bounds, the advancement towards people with disabilities is being low. 
-In the case of people with blindness, there is no a pair of glasses that allow them to move through a room recognizing objects, 
-surfaces and so on. Because of this, the necessity of creating a system that allows to detect such things is crucial since, by disgrace, 
+However, although technology changes by leaps and bounds, the advancement towards people with disabilities is being low. 
+In the case of people with blindness, there is no a pair of glasses that allows them to move through a room recognizing objects, 
+surfaces and so on. Because of this, the necessity of creating a system that detects such elements is crucial since, by disgrace, 
 there is a great amount of people that suffer this disability.
 
-In this sense, the objective is to present
+Nowadays, the people with the disability previously mentioned presents a situation that can change, in a way, thanks to the development 
+of a technology that allows such elements to be recognized in a specific environment, among other features. This technology is presented
+with the name of \textbf{Mixed Reality}. 
+It allows to merge both real objects and virtual objects in a single display giving rise to a holographic world in which the user can 
+interact with both elements. Nevertheless, the sense of utilising this technology is not focused on the graphic representations. 
+The purpose of using mixed reality is because of the recognition of elements of an environment.
 
-\clearpage
+In this sense, the mixed reality device, \textbf{Microsoft HoloLens}, created by Microsoft, can be an option to deal with this situation
+since it integrates the features that the application of mixed reality includes. Thus, a system that helps blind people to detect elements
+is possible due to this device. Inspired by such a idea, it is intended to create a system that warns people with blindness through sounds
+when objects are near since it makes them possible to reach a target in a place.
+
+Therefore, it is hoped that this system helps favourably to contribute to these people since, at this moment, they have a great difficulty to 
+move in a small room towards people withouth any disability. The objective is to reduce this complexity of such people to get better their style of life.
+
+\section{OBJECTIVE}
+The objective of this project that is exposed in this document is to present a system that helps people with blindness to move through a
+small room using the Microsoft mixed reality device. This system will guide the user through sounds to map the environment to detect both elements and surfaces such as tables, chairs, walls and floor, among others. The users will be able to use a range of words that allow them
+to communicate with the device to find the poisition and distance of a specific element. The steps that have been followed to carry
+out this system are as follows:
+
+\begin{enumerate}
+\item Use of the Microsoft's algorithm to map the environment and detect elements and surfaces.
+\item Integration of tools to convert text into speech so that the system can guide the user through the mapping process. In our case,
+we have used the voice of \textit{Cortana}\footnote{Microsoft's assistant} to speak to the user.
+\item Development of speech recognition so that the device can understand what the user says. There is a range of words that
+the user can use to carry out a task. The words are as follows:
+\begin{itemize}
+\item \textbf{Words related to chair}. When the user uses words such as chair, sittable and seat, among others, the system will print a 
+rectangle over the objects that are ``sittable''. Moreover, the number of elements that have been found will be said by the device.
+\item \textbf{Table}. When the user uses this word, the system will print a rectangle over the tables. Moreover, the number of elements
+that have been found will be said by the device.
+\item \textbf{Anything}. When the user uses this word, the system will print a rectangle over all elements that have been found. Moreover, the number of such elements will be said by the device.
+\item \textbf{Distance} When the user uses this word, the system will calculate the distance between the user's position and
+the object or surface which be in front of him.
+\end{itemize}
+
+\end{enumerate}
 
 %\bibliographystyle{alpha}
 %\singlespacing
